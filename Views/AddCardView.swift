@@ -42,7 +42,7 @@ struct AddCardView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 14) {
+                VStack(spacing: 10) {
                     editor(
                         label: "СЛОВО ИЛИ ФРАЗА",
                         placeholder: "to look forward to",
@@ -63,7 +63,7 @@ struct AddCardView: View {
                         placeholder: "I'm looking forward to seeing you.",
                         text: $examples,
                         field: .examples,
-                        lineLimit: 1...6
+                        lineLimit: 1...4
                     )
 
                     if let errorMessage {
@@ -76,7 +76,8 @@ struct AddCardView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 4)
                 }
-                .padding(16)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
                 .frame(maxWidth: 560)
                 .frame(maxWidth: .infinity)
             }
@@ -102,21 +103,22 @@ struct AddCardView: View {
         placeholder: String,
         text: Binding<String>,
         field: Field,
-        lineLimit: ClosedRange<Int> = 1...4
+        lineLimit: ClosedRange<Int> = 1...3
     ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 4) {
             FieldLabel(label)
 
             TextField(placeholder, text: text, axis: .vertical)
-                .font(.system(.title3, design: .rounded, weight: .medium))
+                .font(.system(.body, design: .rounded))
                 .textFieldStyle(.plain)
                 .lineLimit(lineLimit)
                 .focused($focusedField, equals: field)
         }
-        .padding(16)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .cardSurface(cornerRadius: 20)
-        .contentShape(.rect(cornerRadius: 20))
+        .cardSurface(cornerRadius: 16)
+        .contentShape(.rect(cornerRadius: 16))
         .onTapGesture { focusedField = field }
     }
 
@@ -135,7 +137,7 @@ struct AddCardView: View {
             Text("Сохранить")
                 .font(.headline)
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
+                .padding(.vertical, 6)
         }
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.roundedRectangle(radius: 16))
@@ -154,8 +156,8 @@ struct AddCardView: View {
 
     private var helperText: String {
         card == nil
-            ? "Карточку можно будет повторить уже сегодня."
-            : "Прогресс и дата следующего повторения не изменятся."
+            ? "Карточку можно будет повторить уже сегодня"
+            : "Прогресс и дата следующего повторения не изменятся"
     }
 
     private func save() {
